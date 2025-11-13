@@ -2,12 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZemaTools - FC26</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous"/>
-
 <style>
 :root{
   --dark-text:#f5f5f5;
@@ -28,7 +26,7 @@
   box-sizing:border-box;
 }
 
-/* Root scroll container */
+/* Root scroll container and base background */
 html{
   width:100%;
   min-height:100%;
@@ -38,11 +36,10 @@ html{
   background-color:#03060d;
 }
 
-/* Also prevent any horizontal scroll on body */
+/* Page background with gradients */
 body{
   width:100%;
-  min-height:100vh;
-  overflow-x:hidden;
+  min-height:100%;
   font-family:'Montserrat',sans-serif;
   color:var(--dark-text);
   transition:background 0.5s ease,color 0.5s ease;
@@ -52,9 +49,10 @@ body{
     radial-gradient(circle at 80% 0%,rgba(0,175,63,0.15),transparent 50%),
     #03060d;
   position:relative;
+  overflow:visible;
 }
 
-/* Background glow effects */
+/* Big glow elements behind everything, no touch blocking */
 body::before,
 body::after{
   content:"";
@@ -62,8 +60,9 @@ body::after{
   width:500px;
   height:500px;
   border-radius:50%;
+  background:radial-gradient(circle,var(--accent),transparent 60%);
   filter:blur(60px);
-  opacity:0.28;
+  opacity:0.3;
   z-index:0;
   pointer-events:none;
 }
@@ -71,16 +70,20 @@ body::after{
 body::before{
   top:-200px;
   left:-150px;
-  background:radial-gradient(circle,var(--accent),transparent 60%);
 }
 
+/* Slightly weaker green glow so footer is darker */
 body::after{
   bottom:-280px;
   right:-150px;
   background:radial-gradient(circle,var(--accent-2),transparent 60%);
+  opacity:0.22;
 }
 
-::selection{background:var(--accent);color:#031019;}
+::selection{
+  background:var(--accent);
+  color:#031019;
+}
 
 main{
   width:100%;
@@ -90,7 +93,6 @@ main{
   padding:0 1.5rem;
 }
 
-/* NAVBAR */
 .navbar{
   width:100%;
   position:fixed;
@@ -105,6 +107,7 @@ main{
   backdrop-filter:blur(14px);
   border-bottom:1px solid rgba(255,255,255,0.08);
 }
+
 .navbar .logo{
   font-family:'Bebas Neue',sans-serif;
   font-size:2rem;
@@ -112,18 +115,24 @@ main{
   letter-spacing:0.08em;
   text-transform:uppercase;
 }
+
 .navbar .nav-links{
   display:flex;
   align-items:center;
   gap:1.5rem;
   font-weight:600;
 }
+
 .navbar .nav-links a{
   color:rgba(245,245,245,0.85);
   text-decoration:none;
   font-size:0.95rem;
+  letter-spacing:0.04em;
 }
-.navbar .nav-links a:hover{color:#fff;}
+
+.navbar .nav-links a:hover{
+  color:#fff;
+}
 
 .mode-toggle{
   border:none;
@@ -131,9 +140,14 @@ main{
   color:#f5f5f5;
   font-size:1.5rem;
   cursor:pointer;
+  display:flex;
+  align-items:center;
 }
 
-/* HERO SECTION */
+.mode-toggle:focus{
+  outline:none;
+}
+
 .hero{
   display:flex;
   flex-direction:column;
@@ -142,10 +156,47 @@ main{
   text-align:center;
   padding-top:120px;
   padding-bottom:3rem;
+  width:100%;
   max-width:1100px;
   opacity:0;
+  transform:translateY(30px);
   animation:fadeSlideUp 1s forwards ease-out;
+  animation-delay:0.3s;
+  position:relative;
+  z-index:10;
   gap:1.5rem;
+}
+
+.hero-stats{
+  display:flex;
+  gap:1.5rem;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-top:1rem;
+}
+
+.hero-stats .stat{
+  min-width:150px;
+  padding:1rem 1.3rem;
+  border-radius:18px;
+  background:var(--glass-bg);
+  backdrop-filter:blur(14px);
+  border:1px solid var(--glass-border);
+  text-align:left;
+  box-shadow:0 20px 40px rgba(0,0,0,0.25);
+}
+
+.hero-stats .value{
+  font-size:2rem;
+  font-weight:600;
+  color:#fff;
+}
+
+.hero-stats .label{
+  font-size:0.9rem;
+  color:rgba(245,245,245,0.7);
+  text-transform:uppercase;
+  letter-spacing:0.08em;
 }
 
 .hero-badge{
@@ -157,6 +208,8 @@ main{
   background:rgba(255,255,255,0.08);
   border:1px solid rgba(255,255,255,0.15);
   font-size:0.95rem;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
 }
 
 .hero h1{
@@ -164,65 +217,96 @@ main{
   font-size:clamp(3rem,8vw,6rem);
   background:linear-gradient(120deg,#01f7f8,#00af3f,#8d8bff);
   background-size:300% 300%;
-  animation:gradientShift 6s infinite;
+  animation:gradientShift 6s ease infinite;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
+  margin-bottom:0.5rem;
+  text-shadow:0 0 20px rgba(1,247,248,0.35),0 0 35px rgba(0,175,63,0.35);
 }
 
 .hero-title{
+  font-size:1.15rem;
   max-width:820px;
   color:rgba(245,245,245,0.9);
-  font-size:1.15rem;
   line-height:1.8;
-  margin:0 auto;
 }
 
-/* BUTTONS */
 .buttons-container{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
   gap:1rem;
-  max-width:880px;
+  position:relative;
+  z-index:10;
   width:100%;
+  max-width:880px;
+  margin:0 auto;
 }
 
 .button{
   width:100%;
+  text-align:center;
   padding:1rem 1.75rem;
   border-radius:16px;
   text-decoration:none;
   font-weight:600;
-  color:#fff;
+  letter-spacing:0.03em;
+  transition:transform 0.3s,box-shadow 0.3s,background 0.3s;
+  box-shadow:0 15px 35px rgba(0,0,0,0.35);
   border:1px solid rgba(255,255,255,0.18);
-  text-align:center;
 }
 
-.button-gradient{background:linear-gradient(135deg,#e236f7,#8d4dff);}
-.button-main{background:linear-gradient(135deg,#4e7dff,#00af3f);}
-.button-red{background:#ff4c4c;}
-.button-ghost{background:rgba(255,255,255,0.08);}
-
-/* STATS */
-.hero-stats{display:flex;gap:1.5rem;flex-wrap:wrap;justify-content:center;}
-
-.stat{
-  background:var(--glass-bg);
-  border:1px solid var(--glass-border);
-  padding:1rem 1.3rem;
-  border-radius:18px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.25);
+.button-gradient{
+  background:linear-gradient(135deg,#e236f7 0%,#8d4dff 100%);
+  color:#fff;
+  background-size:200% 200%;
+  background-repeat:no-repeat;
 }
-.value{font-size:2rem;font-weight:600;}
-.label{font-size:0.9rem;opacity:0.8;text-transform:uppercase;}
 
-/* FEATURES */
-.feature-section{max-width:1200px;padding-bottom:4rem;}
+.button-gradient:hover{
+  transform:translateY( -4px) scale(1.02);
+  box-shadow:0 20px 40px rgba(226,54,247,0.45);
+  background-position:100% 0;
+}
+
+.button-main{
+  background:linear-gradient(135deg,#4e7dff 0%,#00af3f 100%);
+  color:#fff;
+  background-size:150% 150%;
+  background-repeat:no-repeat;
+}
+
+.button-main:hover{
+  transform:translateY( -4px) scale(1.02);
+  box-shadow:0 20px 40px rgba(25,160,255,0.45);
+  background-position:100% 50%;
+}
+
+.button-red{
+  background-color:var(--button-red);
+  color:#fff;
+}
+
+.button-red:hover{
+  transform:translateY( -4px) scale(1.02);
+  box-shadow:0 20px 40px rgba(255,76,76,0.5);
+}
+
+.button-ghost{
+  background:rgba(255,255,255,0.08);
+  color:#fff;
+}
+
+.button-ghost:hover{
+  background:rgba(255,255,255,0.18);
+}
+
 .section-title{
   font-family:'Bebas Neue',sans-serif;
   font-size:clamp(2rem,5vw,3rem);
   text-align:center;
   margin-bottom:0.4rem;
 }
+
 .section-subtitle{
   text-align:center;
   color:rgba(245,245,245,0.78);
@@ -230,53 +314,233 @@ main{
   margin:0 auto 2rem auto;
   line-height:1.7;
 }
+
+.feature-section{
+  width:100%;
+  max-width:1200px;
+  padding-bottom:4rem;
+  z-index:5;
+}
+
 .feature-grid{
   display:grid;
-  gap:1.5rem;
   grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;
 }
+
 .feature-card{
-  background:var(--glass-bg);
-  border:1px solid var(--glass-border);
   padding:1.8rem;
   border-radius:22px;
+  background:var(--glass-bg);
+  border:1px solid var(--glass-border);
   backdrop-filter:blur(18px);
+  box-shadow:0 20px 50px rgba(0,0,0,0.35);
+  text-align:left;
 }
-.feature-card h3{font-size:1.3rem;margin-bottom:0.75rem;}
-.feature-card ul{list-style:none;display:flex;flex-direction:column;gap:0.5rem;}
-.feature-card ul li{padding-left:1.2rem;position:relative;}
-.feature-card ul li::before{content:"•";position:absolute;left:0;color:var(--accent);}
 
-/* FOOTER */
+.feature-card h3{
+  margin-bottom:0.75rem;
+  font-size:1.3rem;
+  color:#fff;
+}
+
+.feature-card ul{
+  list-style:none;
+  color:rgba(245,245,245,0.85);
+  display:flex;
+  flex-direction:column;
+  gap:0.5rem;
+  line-height:1.5;
+}
+
+.feature-card ul li{
+  padding-left:1.2rem;
+  position:relative;
+  font-size:0.98rem;
+}
+
+.feature-card ul li::before{
+  content:"•";
+  position:absolute;
+  left:0;
+  color:var(--accent);
+}
+
 footer{
   width:100%;
   text-align:center;
   padding:2rem 1rem;
   color:rgba(245,245,245,0.7);
   font-size:0.85rem;
-  z-index:50;
-  position:relative;
+  z-index:5;
 }
 
-/* FLOATING PARTICLES (kept minimal here) */
-.particle,
+/* Floating visuals, do not interfere with scrolling */
+.particle{
+  position:absolute;
+  border-radius:50%;
+  background:var(--particle-blue);
+  filter:drop-shadow(0 0 18px var(--particle-blue));
+  animation:float 20s infinite linear;
+  z-index:0;
+  pointer-events:none;
+}
+
+.particle.green{
+  background:var(--particle-green);
+  filter:drop-shadow(0 0 18px var(--particle-green));
+}
+
 .floating-orb{
   position:absolute;
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  background:linear-gradient(145deg,rgba(255,255,255,0.08),rgba(0,0,0,0));
+  border:1px solid rgba(255,255,255,0.15);
+  filter:blur(0.5px);
+  animation:float 18s ease-in-out infinite;
+  z-index:1;
   pointer-events:none;
-  z-index:0;
 }
 
-/* LIGHT MODE FIX — html and body must BOTH turn white */
-html.light-mode,
-body.light-mode{
-  background:#f0f2f8 !important;
+.floating-orb.orb-1{
+  top:25%;
+  left:5%;
 }
 
-/* Light mode element adjustments */
+.floating-orb.orb-2{
+  bottom:15%;
+  right:10%;
+  animation-duration:22s;
+}
+
+@keyframes fadeSlideUp{
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+@keyframes gradientShift{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+@keyframes float{
+  0%{transform:translate(0,0);}
+  50%{transform:translate(50px, -30px);}
+  100%{transform:translate(0,0);}
+}
+
+@media(max-width:900px){
+  .hero{
+    padding-top:120px;
+  }
+  .hero-title{
+    font-size:1.05rem;
+  }
+  .navbar{
+    padding:0.8rem 1.5rem;
+  }
+}
+
+@media(min-width:1024px){
+  .buttons-container{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    max-width:1040px;
+  }
+}
+
+@media(max-width:640px){
+  .navbar{
+    padding:0.75rem 1.1rem;
+  }
+  .navbar .logo{
+    font-size:1.6rem;
+  }
+  .navbar .nav-links{
+    gap:0.75rem;
+  }
+  .hero{
+    padding-top:110px;
+    gap:1.2rem;
+  }
+  .hero-stats{
+    gap:0.75rem;
+  }
+  .hero-title{
+    font-size:1rem;
+    line-height:1.7;
+  }
+  .section-subtitle{
+    font-size:0.95rem;
+    padding:0 0.5rem;
+  }
+}
+
+@media(max-width:480px){
+  .navbar{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:0.45rem;
+    padding:0.65rem 0.9rem;
+  }
+  .navbar .nav-links{
+    width:100%;
+    justify-content:space-between;
+    gap:0.5rem;
+  }
+  .navbar .nav-links a{
+    font-size:0.85rem;
+  }
+  .hero h1{
+    font-size:clamp(2.5rem,12vw,3.2rem);
+  }
+  .hero-badge{
+    font-size:0.8rem;
+  }
+  .feature-card{
+    padding:1.4rem;
+  }
+  .feature-card ul li{
+    font-size:0.9rem;
+  }
+}
+
 body.light-mode{
+  background:#f0f2f8;
+  color:var(--light-text);
+}
+
+body.light-mode::before,
+body.light-mode::after{
+  opacity:0.12;
+  filter:blur(20px);
+}
+
+body.light-mode .button-ghost{
   color:#111;
-  background:
-    linear-gradient(180deg,#ffffff 0%,#f0f2f8 100%) !important;
+  background:rgba(0,0,0,0.05);
+}
+
+body.light-mode .feature-card{
+  background:rgba(255,255,255,0.9);
+  border-color:rgba(0,0,0,0.08);
+  color:#111;
+}
+
+body.light-mode .feature-card h3{
+  color:#111;
+}
+
+body.light-mode .feature-card ul{
+  color:rgba(0,0,0,0.72);
+}
+
+body.light-mode .feature-card ul li::before{
+  color:var(--button-main);
 }
 
 body.light-mode footer{
@@ -288,78 +552,88 @@ body.light-mode .navbar{
   border-bottom-color:rgba(0,0,0,0.08);
 }
 
-body.light-mode .navbar .logo,
+body.light-mode .navbar .logo{
+  color:#111;
+}
+
 body.light-mode .navbar .nav-links a{
   color:#111;
 }
 
-body.light-mode .feature-card{
-  background:#ffffffd9;
-  border-color:rgba(0,0,0,0.1);
+body.light-mode .mode-toggle{
   color:#111;
 }
 
-body.light-mode .button-ghost{
-  background:rgba(0,0,0,0.07);
+body.light-mode .hero-badge{
+  background:rgba(0,0,0,0.05);
+  border-color:rgba(0,0,0,0.12);
   color:#111;
 }
 
-/* Animations */
-@keyframes fadeSlideUp{
-  to{opacity:1;transform:translateY(0);}
-}
-@keyframes gradientShift{
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
+body.light-mode .hero-title{
+  color:rgba(17,17,17,0.82);
 }
 
-/* Responsive tweaks */
-@media(max-width:640px){
-  .navbar{
-    padding:0.75rem 1.1rem;
-  }
-  .navbar .logo{
-    font-size:1.6rem;
-  }
-  .hero{
-    padding-top:110px;
-  }
-  .hero-title{
-    font-size:1rem;
-  }
+body.light-mode .hero-sub{
+  color:#111;
+}
+
+body.light-mode .hero-sub .line{
+  background:rgba(0,0,0,0.04);
+  border-color:rgba(0,0,0,0.08);
+  color:#111;
+}
+
+body.light-mode .hero-sub .emoji{
+  color:#111;
+}
+
+body.light-mode .section-subtitle{
+  color:rgba(17,17,17,0.7);
+}
+
+body.light-mode .hero-stats .stat{
+  background:rgba(255,255,255,0.95);
+  border-color:rgba(0,0,0,0.08);
+  box-shadow:0 18px 30px rgba(0,0,0,0.08);
+}
+
+body.light-mode .hero-stats .value{
+  color:#111;
+}
+
+body.light-mode .hero-stats .label{
+  color:rgba(17,17,17,0.7);
+}
+
+body.light-mode .floating-orb{
+  background:linear-gradient(145deg,rgba(112,240,255,0.25),rgba(0,0,0,0));
+  border-color:rgba(0,0,0,0.08);
+  filter:blur(0);
 }
 </style>
 </head>
-
 <body class="dark-mode">
-
 <nav class="navbar">
   <div class="logo">ZemaTools</div>
   <div class="nav-links">
     <a href="#features">Features</a>
-    <button class="mode-toggle" id="modeToggle">
+    <button class="mode-toggle" id="modeToggle" aria-label="Toggle light or dark mode">
       <i class="fa-solid fa-sun"></i>
     </button>
   </div>
 </nav>
-
 <main>
-
   <section class="hero">
     <span class="hero-badge"><i class="fa-solid fa-star"></i>FUT Companion by Zema</span>
     <h1>ZemaTools</h1>
-    <p class="hero-title">
-      zematools© is a tool to help you with your everyday tasks in EA FC Ultimate Team. It consists of a set of plugins that will assist you in sniping, completing SBCs, opening multiple packs with a single click and keyboard shortcuts for different tasks among other things.
-    </p>
-
+    <p class="hero-title">zematools© is a tool to help you with your everyday tasks in EA FC Ultimate Team. It consists of a set of plugins that will assist you in sniping, completing SBCs, opening multiple packs with a single click and keyboard shortcuts for different tasks among other things.</p>
     <div class="buttons-container">
-      <a class="button button-gradient" href="Zematools26.js">Download ZemaTools v26.0.11</a>
+      <a class="button button-gradient" href="Zematools26.js">Download ZemaTools v26.0.20</a>
       <a class="button button-main" href="https://www.icloud.com/shortcuts/485de692d84c462288e980010a79f58e">Download ZemaTools App</a>
       <a class="button button-ghost" href="https://autosbc.app/userscript/autosbc.user.js">Download AutoSBC</a>
       <a class="button button-red" href="FC26_App_Logo.png">Download FC26 App Logo</a>
     </div>
-
     <div class="hero-stats">
       <div class="stat">
         <div class="value">24/7</div>
@@ -367,67 +641,79 @@ body.light-mode .button-ghost{
       </div>
       <div class="stat">
         <div class="value">3 tools</div>
-        <div class="label">One hub</div>
+        <div class="label">One download hub</div>
       </div>
     </div>
   </section>
 
   <section class="feature-section" id="features">
-    <h2 class="section-title">What can you do with zematools</h2>
-    <p class="section-subtitle">Everything below comes directly from the zematools© toolkit.</p>
-
+    <h2 class="section-title">What can you do with zematools?</h2>
+    <p class="section-subtitle">Every capability below is pulled directly from the zematools© toolkit so only accurate information appears on the page.</p>
     <div class="feature-grid">
       <article class="feature-card">
         <h3>Transfer Market</h3>
         <ul>
-          <li>Keyboard sniping</li>
-          <li>Check lowest prices</li>
-          <li>Auto relist players</li>
-          <li>Transactions history</li>
+          <li>Use your keyboard to snipe</li>
+          <li>Look for player lowest prices</li>
+          <li>Auto relist players from the transfer list</li>
+          <li>Transactions History</li>
         </ul>
       </article>
-
       <article class="feature-card">
-        <h3>SBC Tools</h3>
+        <h3>SBC</h3>
         <ul>
-          <li>Keyboard shortcuts</li>
+          <li>Keyboard shortcuts for filling and submitting SBCs</li>
           <li>Auto reclaim rewards</li>
-          <li>Add multiple players</li>
-          <li>Decimal rating support</li>
-          <li>Use duplicates or transfer list players</li>
-          <li>Create reusable templates</li>
-          <li>Import solutions</li>
+          <li>Add multiple players at once</li>
+          <li>Decimal rating</li>
+          <li>Use duplicated or unassigned or transfer list players</li>
+          <li>Create templates to easily reuse on squad creations</li>
+          <li>Import SBC solutions</li>
           <li>Filter SBCs</li>
+          <li>Auto reclaim rewards</li>
         </ul>
       </article>
-
       <article class="feature-card">
-        <h3>Other Tools</h3>
+        <h3>Other</h3>
         <ul>
           <li>Club Analyzer</li>
-          <li>Extra player info</li>
-          <li>Skip pack animations</li>
+          <li>Display player card extra information</li>
+          <li>Disable pack opening animations</li>
           <li>Auto open packs</li>
           <li>Grid or Wide mode</li>
-          <li>Hidden injuries</li>
+          <li>Display hidden injuries</li>
           <li>Lock Players</li>
-          <li>Filter or group packs</li>
+          <li>Group or Filter or Hide Packs</li>
+          <li>Shortcuts for different actions</li>
         </ul>
       </article>
     </div>
   </section>
-
 </main>
 
-<footer>
-  © <span id="year"></span> ZemaTools. Built for the FC26 community.
-</footer>
+<footer>© <span id="year"></span> ZemaTools. Built for the FC26 community.</footer>
+
+<div class="floating-orb orb-1"></div>
+<div class="floating-orb orb-2"></div>
+<div class="particle" style="top:10%; left:20%; width:8px; height:8px; animation-duration:25s;"></div>
+<div class="particle green" style="top:50%; left:80%; width:14px; height:14px; animation-duration:30s;"></div>
+<div class="particle" style="top:70%; left:40%; width:10px; height:10px; animation-duration:20s;"></div>
+<div class="particle green" style="top:30%; left:60%; width:12px; height:12px; animation-duration:35s;"></div>
+<div class="particle" style="top:80%; left:10%; width:16px; height:16px; animation-duration:28s;"></div>
+<div class="particle green" style="top:15%; left:50%; width:9px; height:9px; animation-duration:22s;"></div>
+<div class="particle" style="top:40%; left:30%; width:13px; height:13px; animation-duration:26s;"></div>
+<div class="particle green" style="top:60%; left:70%; width:11px; height:11px; animation-duration:32s;"></div>
+<div class="particle" style="top:75%; left:20%; width:15px; height:15px; animation-duration:24s;"></div>
+<div class="particle green" style="top:25%; left:40%; width:10px; height:10px; animation-duration:27s;"></div>
+<div class="particle" style="top:55%; left:60%; width:12px; height:12px; animation-duration:29s;"></div>
+<div class="particle green" style="top:65%; left:25%; width:14px; height:14px; animation-duration:31s;"></div>
+<div class="particle" style="top:20%; left:70%; width:11px; height:11px; animation-duration:26s;"></div>
 
 <script>
 const toggleButton=document.getElementById('modeToggle');
 const toggleIcon=toggleButton.querySelector('i');
 
-function updateIcon(){
+const setModeIcon=()=>{
   if(document.body.classList.contains('light-mode')){
     if(toggleIcon.classList.contains('fa-sun')){
       toggleIcon.classList.replace('fa-sun','fa-moon');
@@ -437,16 +723,15 @@ function updateIcon(){
       toggleIcon.classList.replace('fa-moon','fa-sun');
     }
   }
-}
+};
 
 toggleButton.addEventListener('click',()=>{
   document.body.classList.toggle('light-mode');
-  document.documentElement.classList.toggle('light-mode');
-  updateIcon();
+  setModeIcon();
 });
 
+setModeIcon();
 document.getElementById('year').textContent=new Date().getFullYear();
-updateIcon();
 </script>
 
 </body>
