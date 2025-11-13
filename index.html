@@ -28,11 +28,9 @@ body{
   font-family:'Montserrat',sans-serif;
   min-height:100vh;
   color:var(--dark-text);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
   transition:background 0.5s ease,color 0.5s ease;
   overflow-x:hidden;
+  overflow-y:auto;
   background:linear-gradient(180deg,rgba(3,6,13,0) 0%,rgba(3,6,13,0.8) 65%,#03060d 100%),
              radial-gradient(circle at 20% 20%,rgba(1,247,248,0.12),transparent 55%),
              radial-gradient(circle at 80% 0%,rgba(0,175,63,0.15),transparent 50%),
@@ -100,8 +98,10 @@ main{width:100%;display:flex;flex-direction:column;align-items:center;padding:0 
 .hero-title{font-size:1.15rem;max-width:820px;color:rgba(245,245,245,0.9);line-height:1.8;}
 .buttons-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem;position:relative;z-index:10;width:100%;max-width:880px;margin:0 auto;}
 .button{width:100%;text-align:center;padding:1rem 1.75rem;border-radius:16px;text-decoration:none;font-weight:600;letter-spacing:0.03em;transition:transform 0.3s,box-shadow 0.3s,background 0.3s;box-shadow:0 15px 35px rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.18);}
-.button-main{background:linear-gradient(135deg,#4e7dff,#00af3f);color:#fff;}
-.button-main:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 20px 40px rgba(25,160,255,0.45);}
+.button-gradient{background:linear-gradient(135deg,#e236f7 0%,#8d4dff 100%);color:#fff;background-size:200% 200%;background-repeat:no-repeat;}
+.button-gradient:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 20px 40px rgba(226,54,247,0.45);background-position:100% 0;}
+.button-main{background:linear-gradient(135deg,#4e7dff 0%,#00af3f 100%);color:#fff;background-size:150% 150%;background-repeat:no-repeat;}
+.button-main:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 20px 40px rgba(25,160,255,0.45);background-position:100% 50%;}
 .button-red{background-color:var(--button-red);color:#fff;}
 .button-red:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 20px 40px rgba(255,76,76,0.5);}
 .button-ghost{background:rgba(255,255,255,0.08);color:#fff;}
@@ -200,7 +200,7 @@ body.light-mode .floating-orb{background:linear-gradient(145deg,rgba(112,240,255
     <h1>ZemaTools</h1>
     <p class="hero-title">zematools© is a tool to help you with your everyday tasks in EA FC Ultimate Team. It consists of a set of plugins that will assist you in sniping, completing SBCs, opening multiple packs with a single click and keyboard shortcuts for different tasks among other things.</p>
     <div class="buttons-container">
-      <a class="button" style="background:#e236f7; color:#fff;" href="Zematools26.js">Download ZemaTools v26.0.11</a>
+      <a class="button button-gradient" href="Zematools26.js">Download ZemaTools v26.0.11</a>
       <a class="button button-main" href="https://www.icloud.com/shortcuts/485de692d84c462288e980010a79f58e">Download ZemaTools App</a>
       <a class="button button-ghost" href="https://autosbc.app/userscript/autosbc.user.js">Download AutoSBC</a>
       <a class="button button-red" href="FC26_App_Logo.png">Download FC26 App Logo</a>
