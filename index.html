@@ -33,7 +33,7 @@
 html{
   width:100%;
   min-height:100%;
-  overflow-x:hidden;       /* prevents sideways scroll */
+  overflow-x:hidden;       /* prevents sideways scroll at root */
   overflow-y:auto;
   scroll-behavior:smooth;
   background-color:#03060d;
@@ -58,6 +58,7 @@ body{
     #03060d;
   position:relative;
   overflow:visible;
+  overflow-x:hidden; /* hard stop any horizontal scrolling */
 }
 
 /* Big glow elements behind everything, no touch blocking */
