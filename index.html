@@ -20,6 +20,10 @@
   --particle-blue:rgba(1,247,248,0.5);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
+html,body{
+  width:100%;
+  overflow-x:hidden;
+}
 body{
   font-family:'Montserrat',sans-serif;
   min-height:100vh;
@@ -148,6 +152,9 @@ footer{width:100%;text-align:center;padding:2rem 1rem;color:rgba(245,245,245,0.7
   .section-subtitle{font-size:0.95rem;padding:0 0.5rem;}
 }
 @media(max-width:480px){
+  .navbar{flex-direction:column;align-items:flex-start;gap:0.45rem;padding:0.65rem 0.9rem;}
+  .navbar .nav-links{width:100%;justify-content:space-between;gap:0.5rem;}
+  .navbar .nav-links a{font-size:0.85rem;}
   .hero h1{font-size:clamp(2.5rem,12vw,3.2rem);}
   .hero-badge{font-size:0.8rem;}
   .feature-card{padding:1.4rem;}
