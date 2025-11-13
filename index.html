@@ -20,7 +20,7 @@
   --particle-blue:rgba(1,247,248,0.5);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-  html,body{
+html,body{
   width:100%;
   overflow-x:hidden;
 }
@@ -29,8 +29,6 @@ body{
   min-height:100vh;
   color:var(--dark-text);
   transition:background 0.5s ease,color 0.5s ease;
-  overflow-x:hidden;
-  overflow-y:auto;
   background:linear-gradient(180deg,rgba(3,6,13,0) 0%,rgba(3,6,13,0.8) 65%,#03060d 100%),
              radial-gradient(circle at 20% 20%,rgba(1,247,248,0.12),transparent 55%),
              radial-gradient(circle at 80% 0%,rgba(0,175,63,0.15),transparent 50%),
@@ -123,12 +121,24 @@ footer{width:100%;text-align:center;padding:2rem 1rem;color:rgba(245,245,245,0.7
   filter:drop-shadow(0 0 18px var(--particle-blue));
   animation:float 20s infinite linear;
   z-index:0;
+  pointer-events:none;
 }
 .particle.green{
   background:var(--particle-green);
   filter:drop-shadow(0 0 18px var(--particle-green));
 }
-.floating-orb{position:absolute;width:220px;height:220px;border-radius:50%;background:linear-gradient(145deg,rgba(255,255,255,0.08),rgba(0,0,0,0));border:1px solid rgba(255,255,255,0.15);filter:blur(0.5px);animation:float 18s ease-in-out infinite;z-index:1;}
+.floating-orb{
+  position:absolute;
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  background:linear-gradient(145deg,rgba(255,255,255,0.08),rgba(0,0,0,0));
+  border:1px solid rgba(255,255,255,0.15);
+  filter:blur(0.5px);
+  animation:float 18s ease-in-out infinite;
+  z-index:1;
+  pointer-events:none;
+}
 .floating-orb.orb-1{top:25%;left:5%;}
 .floating-orb.orb-2{bottom:15%;right:10%;animation-duration:22s;}
 @keyframes fadeSlideUp{to{opacity:1;transform:translateY(0);}}
@@ -237,7 +247,7 @@ body.light-mode .floating-orb{background:linear-gradient(145deg,rgba(112,240,255
           <li>Auto reclaim rewards</li>
           <li>Add multiple players at once</li>
           <li>Decimal rating</li>
-          <li>Use duplicated / unassigned / transfer list players</li>
+          <li>Use duplicated or unassigned or transfer list players</li>
           <li>Create templates to easily reuse on squad creations</li>
           <li>Import SBC solutions</li>
           <li>Filter SBCs</li>
@@ -251,10 +261,10 @@ body.light-mode .floating-orb{background:linear-gradient(145deg,rgba(112,240,255
           <li>Display player card extra information</li>
           <li>Disable pack opening animations</li>
           <li>Auto open packs</li>
-          <li>Grid / Wide mode</li>
+          <li>Grid or Wide mode</li>
           <li>Display hidden injuries</li>
           <li>Lock Players</li>
-          <li>Group / Filter / Hide Packs</li>
+          <li>Group or Filter or Hide Packs</li>
           <li>Shortcuts for different actions</li>
         </ul>
       </article>
